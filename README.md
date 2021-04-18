@@ -11,6 +11,6 @@ Three data visualization projects for a course of big data visualization @UCSB M
 ## Language used:
 
 * SQL for pulling out data from databases
-* JavaScript (including the library of [P5.js](https://p5js.org/get-started/)) for visualization and creating interaction
+* JavaScript (including the library of [P5.js](https://p5js.org/get-started/)) for visualization and creating interactions
 * R and Python for data processing
 * html, css, etc. for organizing all the information and put on the webpage.
