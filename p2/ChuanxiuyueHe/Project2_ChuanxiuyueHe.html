@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+    <HEAD>
+        <TITLE>Project Description</TITLE>
+        <link rel="stylesheet" type="text/css" media="all" href="../../newTemplate.css" /> 
+    </HEAD>
+
+    <BODY bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+        <div id="wrap">
+    	    <div class="left_column"></div>
+
+            <!-- Replace to your own title below -->
+    	    <div class="right_column"><strong><span class="style4">Time Series Models of Novels and DVDs of A Song of the Ice and Fire</span><br></strong></div>
+            
+            <div class="line"></div>
+            <div class="left_column"><strong>MAT 259, 2020</strong></div>
+
+            <!-- Replace to your name below -->
+            <div class="right_column"><strong>Chuanxiuyue(Carol) HE</strong></div>
+            
+            <div class="line"><hr noshade size="1"></div> 
+            
+            <!-- Concept Section -->
+            <div class="left_column"><strong>Concept</strong></div>
+            <div class="right_column">
+                By using this 3D visualization, I would like to show the relation between the popularity of the novels of A Song of the ice and fire and the popularity of the DVDs of the HBO TV series adapted from these novels from 2010 to 2019. I used time series models to show that the variance in monthly checkout percentage of the novels and DVDs are comprised of seasonal variations, random variations and main trends.<br>
+            </div>
+            <div class="line"><hr noshade size="1"></div> 
+        
+            <div class="left_column"><strong>Query</strong></div>
+            <div class="right_column">
+                SELECT EXTRACT(YEAR_MONTH FROM cout) AS year_months, <br>
+                COUNT(CASE WHEN (LOWER(title) IN ('game of thrones' , 'game of thrones the graphic novel Volume 1','game of thrones the graphic novel Volume 2',
+                'game of thrones the graphic novel Volume 3','game of thrones the graphic novel Volume 4') AND itemtype = 'acbk') THEN 1 END) AS novel1,<br>
+                COUNT(CASE WHEN(LOWER(title) IN ('clash of kings' , 'clash of kings the graphic novel Volume 1','clash of kings the graphic novel Volume 2',
+                'clash of kings book two of A song of ice and fire') AND itemtype = 'acbk')THEN 1 END) AS novel2,<br>
+                COUNT(CASE WHEN (LOWER(title) = 'storm of swords' AND itemtype = 'acbk') THEN 1 END) AS novel3,<br>
+                COUNT(CASE WHEN (LOWER(title) = 'feast for crows' AND itemtype = 'acbk') THEN 1 END) AS novel4,<br>
+                COUNT(CASE WHEN (LOWER(title) = 'dance with dragons' AND itemtype = 'acbk') THEN 1 END) AS novel5,<br>
+                COUNT(CASE WHEN (LOWER(title) = 'game of thrones the complete first season' AND itemtype = 'acdvd') THEN 1 END) AS season1,<br>
+                COUNT(CASE WHEN (LOWER(title) = 'game of thrones the complete second season'
+                AND itemtype = 'acdvd') THEN 1 END) AS season2,<br>
+                COUNT(CASE WHEN (LOWER(title) = 'game of thrones the complete third season'
+                AND itemtype = 'acdvd') THEN 1 END) AS season3,<br>
+                COUNT(CASE WHEN (LOWER(title) = 'game of thrones the complete fourth season'
+                AND itemtype = 'acdvd') THEN 1 END) AS season4,<br>
+                COUNT(CASE WHEN (LOWER(title) = 'game of thrones the complete fifth season'
+                AND itemtype = 'acdvd') THEN 1 END) AS season5,<br>
+                COUNT(CASE WHEN (LOWER(title) = 'game of thrones the complete sixth season'
+                AND itemtype = 'acdvd') THEN 1 END) AS season6,<br>
+                COUNT(CASE WHEN (LOWER(title) = 'game of thrones the complete seventh season'
+                AND itemtype = 'acdvd') THEN 1 END) AS season7,<br>
+                COUNT(CASE WHEN (LOWER(title) = 'game of thrones the complete eighth season'
+                AND itemtype = 'acdvd') THEN 1 END) AS season8<br>
+                FROM spl_2016.outraw WHERE EXTRACT(YEAR_MONTH FROM cout) != '202002' GROUP BY EXTRACT(YEAR_MONTH FROM cout) LIMIT 500;
+            </div>
+            <div class="line"><hr noshade size="1"></div>
+
+            <!-- Sketches Section -->
+            <div class="left_column"><strong>Preliminary sketches</strong></div>
+            <div class="right_column">
+                Based on theories related to time series, variance in some types of time series can be decomposed into three different parts. First part is a main trend, which means, in general, a decreasing or increasing or quadratic trend over years. The second part is seasonality, which means the monthly checkouts vary due to the time within a year. <br><br>    
+                <img src="sketch_one.png" width="500"/><br><br>
+                For example, people may borrow more novels or DVDs in winter due to Christmas. The last part is random component, which means there are some trivial and dynamic factors causing the fluctuations in monthly checkouts. For example, please see below variation decomposition figure for novels.<br><br>  
+                <img src="sketch_two.png" width="500"/><br><br>     
+            </div>
+            <div class="line"><hr noshade size="1"></div>
+        
+            <!-- Process Section -->
+            <div class="left_column"><strong>Process</strong></div>
+            <div class="right_column">    
+                Monthly checkouts percent of the novels related to A Song of the ice and fire were calculated. The same pre-processing procedure were done for the DVDs of the HBO TV series counterparts. I calculated the monthly percentage instead of using raw checkouts because according to project 1, my classmates also found similar trends of checkouts regarding to other items. Thus, I would like to control the total checkouts to exclude the factor that people might not borrow items too frequently these years in general. Then, the monthly percentages were input into Rstudio to develop two time series models for the novels and the DVDs separately. <br>
+                Before model development, it was noted that there are missing values for January and February in 2018. Thus, I used an interpolation function to estimate the values for these two months (See details in the .rmd file).<br><br>
+                <img src="process_one.png" width="500"/><br><br>
+                <img src="process_two.png" width="500"/><br><br>
+            </div>
+            <div class="line"><hr noshade size="1"></div> 
+            
+             <!-- Final Section -->
+            <div class="left_column"><strong>Final result</strong></div>
+            <div class="right_column"> 
+                Click <a href="https://editor.p5js.org/Carol_He/present/LnaS6Wgy_">here</a> to see the online demo.<br><br>
+                Show general structure of the visualization contained by 4 layers. Users can change color solutions by clicking "Change Color Solution button" to switch among 3 sets of colors.
+                <img src="final_one.png" width="500"/><br><br>
+                Users can check different perspectives of the structure by pressing different button and the instructions are on the left-bottom side of the screen. They can lso use the checkboxes to tun on/off different features, such as labels.
+                <img src="final_two.png" width="500"/><br><br>
+                By checking the checkbox to turn on the random dots, users can see random dots bouce between the bounds of the random component.<br><br>
+                If mouse move to the left side of the screen (close to the buttons and checkboxes) the instructions below will show up. However, if mouse move away, the instructions will disappear. I added this feature to make the whole canvas tidier.<br><br>
+                The result shows that novels did help to boost novel reading at beginning but after releasing Season 4 of Game of Thrones, the interest of reading novels went done. Also, people would like to borrow DVDs when they were newly released but the interest of borrowing did not last very long.<br>
+                Both novel reading and DVD watching shows seasonality but they only contribute to a small amount of fluctuation. In general, people are still more interested in watching DVDs than reading novels. The random component accounts for more fluctuation of novel reading than that of DVD watching.<br><br>
+                This visualization is far away from being perfect. First, it just combine several 2D visualization instead of taking full advantage of 3D space. Second, it would be better to show the connection and relationship between novels and DVDs as opposed to plotting them in different layers.
+            </div>
+            <div class="line"><hr noshade size="1"></div> 
+            
+             <!-- Source Code Section -->
+            <div class="left_column"><strong>Code</strong></div>
+            <div class="right_column">
+                Visualization is developed within P5.js and Model Development is conducted in RStudio. Data Withdraw and pre-processing was done in myMQL and Excel<br>
+                <!-- Please put the link of the source code and data below -->
+                <a href="ForgottenBooks.zip">Source Code + Data</a><br><br>    
+            </div>
+            <div class="line"><hr noshade size="1"></div> 
+        </div><!--END WRAP-->
+    </BODY>
+</HTML>

@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+    <HEAD>
+        <TITLE>Project Description</TITLE>
+        <link rel="stylesheet" type="text/css" media="all" href="../../newTemplate.css" /> 
+    </HEAD>
+
+    <BODY bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+        <div id="wrap">
+    	    <div class="left_column"></div>
+
+            <!-- Replace to your own title below -->
+    	    <div class="right_column"><strong><span class="style4">The Popularity of Game of Thrones and Its Novels</span><br></strong></div>
+            
+            <div class="line"></div>
+            <div class="left_column"><strong>MAT 259, 2020</strong></div>
+
+            <!-- Replace to your name below -->
+            <div class="right_column"><strong>Chuanxiuyue(Carol) He</strong></div>
+            
+            <div class="line"><hr noshade size="1"></div> 
+            
+            <!-- Concept Section -->
+            <div class="left_column"><strong>Concept</strong></div>
+            <div class="right_column">
+                With the check-out records of the Seattle library, I am interested in how popularity of the epic fantasy novel series “A Song of Ice and Fire” changes over years. Moreover, the original novels became in the public eye because of the premiere of the HBO television series “Game of Thrones” which names after the first novel of the series. Thus, I believe the checkouts of the novels fluctuate as a new season of the TV series comes out. Since 2020 was just off to a start when I was doing this analysis, I only investigated the check-out records from 2006 to 2019.<br>
+            </div>
+            <div class="line"><hr noshade size="1"></div> 
+        
+            <div class="left_column"><strong>Query</strong></div>
+            <div class="right_column">
+            SELECT LOWER(title), itemtype, YEAR(cout) AS years, COUNT(title) AS checkoutcounts<br>
+            FROM spl_2016.outraw WHERE (LOWER(title) LIKE '%game of thrones%')<br>
+                 OR LOWER(title) LIKE '%clash of kings%'<br>
+                 OR LOWER(title) LIKE '%storm of swords%'<br>
+                 OR LOWER(title) LIKE '%feast for crows%'<br>
+                 OR LOWER(title) LIKE '%dance with dragons%'<br>
+                 OR LOWER(title) LIKE '%winds of winters%'<br>
+                 OR LOWER(title) LIKE '%dream of spring%'<br>
+                 AND YEAR(cout)<2020<br>
+            GROUP BY title itemtype, YEAR(cout)<br>
+            ORDER BY LOWER(title), itemtype, YEAR(cout) ASC<br>
+            LIMIT 500;<br><br>
+            SELECT COUNT(DISTINCT bibNumber) AS bibNumbercount, <br>
+                COUNT(LOWER(title)) AS checkouts, YEAR(cout) AS years <br>
+            FROM spl_2016.outraw WHERE (LOWER(title) LIKE '%game of thrones%')<br>
+                 OR LOWER(title) LIKE '%clash of kings%'<br>
+                 OR LOWER(title) LIKE '%storm of swords%'<br>
+                 OR LOWER(title) LIKE '%feast for crows%'<br>
+                 OR LOWER(title) LIKE '%dance with dragons%'<br>
+                 OR LOWER(title) LIKE '%winds of winters%'<br>
+                 AND LOWER(title) != 'ecstasy and terror from the greeks to game of thrones'<br>
+                 AND LOWER(title) != 'geeky chef cookbook unofficial recipes from doctor who game of thrones harry potter and more real life recipes for your favorite fantasy food'
+                 AND YEAR(cout)<2020<br>
+            GROUP BY YEAR(cout)<br>
+            LIMIT 500;<br><br>
+            SELECT YEAR(cout) AS years, COUNT(CASE WHEN (LOWER(title) = 'game of thrones'
+                OR LOWER(title) = 'game of thrones the graphic novel Volume 1'
+                OR LOWER(title) = 'game of thrones the graphic novel Volume 2'
+                OR LOWER(title) = 'game of thrones the graphic novel Volume 3'
+                OR LOWER(title) = 'game of thrones the graphic novel Volume 4') THEN 1 END) AS novel1, <br>
+                COUNT(CASE WHEN (LOWER(title) = 'clash of kings'
+                OR LOWER(title) = 'clash of kings the graphic novel Volume 1'
+                OR LOWER(title) = 'clash of kings the graphic novel Volume 2'
+                OR LOWER(title) = 'clash of kings book two of A song of ice and fire') THEN 1 END) AS novel2, <br>
+                COUNT(CASE WHEN LOWER(title) = 'storm of swords' THEN 1 END) AS novel3,<br>
+                COUNT(CASE WHEN LOWER(title) = 'feast for crows' THEN 1 END) AS novel4, <br>
+                COUNT(CASE WHEN LOWER(title) = 'dance with dragons' THEN 1 END) AS novel5 <br>
+                FROM spl_2016.outraw WHERE itemtype = 'acbk' AND YEAR(cout)<2020, <br>
+                GROUP BY YEAR(cout) LIMIT 500;<br><br>
+            SELECT YEAR(cout) AS years, COUNT(CASE WHEN (LOWER(title) = 'game of thrones the complete first season') THEN 1END) AS season1,<br>
+                COUNT(CASE WHEN (LOWER(title) = 'game of thrones the complete second season') THEN 1 END) AS season2,<br>
+                COUNT(CASE WHEN LOWER(title) = 'game of thrones the complete third season' THEN 1 END) AS season3,<br>
+                COUNT(CASE WHEN LOWER(title) = 'game of thrones the complete fourth season' THEN 1 END) AS season4,<br>
+                COUNT(CASE WHEN LOWER(title) = 'game of thrones the complete fifth season' THEN 1 END) AS season5,<br>
+                COUNT(CASE WHEN LOWER(title) = 'game of thrones the complete sixth season' THEN 1 END) AS season6,<br>
+                COUNT(CASE WHEN LOWER(title) = 'game of thrones the complete seventh season' THEN 1 END) AS season7,<br>
+                COUNT(CASE WHEN LOWER(title) = 'game of thrones the complete eighth season' THEN 1 END) AS season8 <br>
+                FROM spl_2016.outraw WHERE itemtype = 'acdvd' AND YEAR(cout) < 2020<br>
+                GROUP BY YEAR(cout) LIMIT 500;
+            </div>
+            <div class="line"><hr noshade size="1"></div>
+
+            <!-- Sketches Section -->
+            <div class="left_column"><strong>Preliminary sketches</strong></div>
+            <div class="right_column">
+                The TV series “Game of Thrones” are adapted from different novels of “A song of Ice and Fire”. <br><br>    
+                <img src="sketch_one.png" width="500"/><br><br>
+                <img src="sketch_two.png" width="500"/><br><br>     
+            </div>
+            <div class="line"><hr noshade size="1"></div>
+        
+            <!-- Process Section -->
+            <div class="left_column"><strong>Process</strong></div>
+            <div class="right_column">    
+                I first checked the list of all items related to "A Song of Ice and Fire" including all books and DVDs.<br>
+                From the output table, the book “Greeky chef cookbook” was included because the food it introduces is similar to the food in Game of thrones. However, this book is not directly related to the fantacies themselves. Thus, we excluded these kinds of book in the following analysis.<br>
+                <img src="process_one.png" width="500"/><br><br>
+                <img src="process_two.png" width="500"/><br><br>
+            </div>
+            <div class="line"><hr noshade size="1"></div> 
+            
+             <!-- Final Section -->
+            <div class="left_column"><strong>Final result</strong></div>
+            <div class="right_column">    
+                Here is the final output related to the popularity of DVDs and novels related to "A Song of Ice and Fire".<br><br>
+                <img src="final_one.png" width="500"/><br><br>
+                <img src="final_two.png" width="500"/><br><br>
+            </div>
+            <div class="line"><hr noshade size="1"></div> 
+            
+             <!-- Source Code Section -->
+            <div class="left_column"><strong>Code</strong></div>
+            <div class="right_column">
+                All work is developed within mySQL and Excel<br>
+                <!-- Please put the link of the source code and data below -->
+                <a href="source.zip">Source Code + Data</a><br><br>    
+            </div>
+            <div class="line"><hr noshade size="1"></div> 
+        </div><!--END WRAP-->
+    </BODY>
+</HTML>
